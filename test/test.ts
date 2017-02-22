@@ -8,14 +8,14 @@ describe("parse", () => {
 			// Project: https://github.com/foo/foo, https://foo.com
 			// Definitions by: My Self <https://github.com/me>, Some Other Guy <https://github.com/otherguy>
 			// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-			// TypeScript Version: 2.1
+			// TypeScript Version: 2.2
 
 			...file content...`;
 		assert.deepStrictEqual(parseHeaderOrFail(src), {
 			libraryName: "foo",
 			libraryMajorVersion: 1,
 			libraryMinorVersion: 2,
-			typeScriptVersion: "2.1",
+			typeScriptVersion: "2.2",
 			projects: ["https://github.com/foo/foo", "https://foo.com"],
 			contributors: [
 				{ name: "My Self", url: "https://github.com/me" },
