@@ -13,8 +13,8 @@ var TypeScriptVersion;
         }
     }
     /** True if a package with the given typescript version should be published as prerelease. */
-    function isPrerelease(version) {
-        return version === TypeScriptVersion.Latest;
+    function isPrerelease(_version) {
+        return false;
     }
     TypeScriptVersion.isPrerelease = isPrerelease;
     /** List of NPM tags that should be changed to point to the latest version. */
