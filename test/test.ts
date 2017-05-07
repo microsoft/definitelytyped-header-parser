@@ -51,8 +51,8 @@ describe("parse", () => {
 
 describe("parseTypeScriptVersionLine", () => {
 	it("works", () => {
-		const src = "// TypeScript Version: 2.1";
-		assert.equal(parseTypeScriptVersionLine(src), "2.1");
+		["2.1", "2.2", "2.3"]
+			.forEach(version => assert.equal(parseTypeScriptVersionLine(`// TypeScript Version: ${version}`), version));
 
 		const wrong = "// TypeScript Version: 3.14";
 		assert.throws(() => parseTypeScriptVersionLine(wrong));
