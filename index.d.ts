@@ -1,11 +1,11 @@
 /// <reference types="parsimmon" />
 import pm = require("parsimmon");
-export declare type TypeScriptVersion = "2.0" | "2.1" | "2.2";
+export declare type TypeScriptVersion = "2.0" | "2.1" | "2.2" | "2.3";
 export declare namespace TypeScriptVersion {
     const All: TypeScriptVersion[];
     const Lowest = "2.0";
     /** Latest version that may be specified in a `// TypeScript Version:` header. */
-    const Latest = "2.2";
+    const Latest = "2.3";
     /** True if a package with the given typescript version should be published as prerelease. */
     function isPrerelease(_version: TypeScriptVersion): boolean;
     /** List of NPM tags that should be changed to point to the latest version. */

@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const pm = require("parsimmon");
 var TypeScriptVersion;
 (function (TypeScriptVersion) {
-    TypeScriptVersion.All = ["2.0", "2.1", "2.2"];
+    TypeScriptVersion.All = ["2.0", "2.1", "2.2", "2.3"];
     TypeScriptVersion.Lowest = "2.0";
     /** Latest version that may be specified in a `// TypeScript Version:` header. */
-    TypeScriptVersion.Latest = "2.2";
+    TypeScriptVersion.Latest = "2.3";
     for (const v of TypeScriptVersion.All) {
         if (v > TypeScriptVersion.Latest) {
             throw new Error("'Latest' not properly set.");
@@ -23,11 +23,13 @@ var TypeScriptVersion;
             case "2.0":
                 // A 2.0-compatible package is assumed compatible with TypeScript 2.1
                 // We want the "2.1" tag to always exist.
-                return [tags.latest, tags.v2_0, tags.v2_1, tags.v2_2, tags.v2_3];
+                return [tags.latest, tags.v2_0, tags.v2_1, tags.v2_2, tags.v2_3, tags.v2_4];
             case "2.1":
-                return [tags.latest, tags.v2_1, tags.v2_2, tags.v2_3];
+                return [tags.latest, tags.v2_1, tags.v2_2, tags.v2_3, tags.v2_4];
             case "2.2":
-                return [tags.latest, tags.v2_2, tags.v2_3];
+                return [tags.latest, tags.v2_2, tags.v2_3, tags.v2_4];
+            case "2.3":
+                return [tags.latest, tags.v2_3, tags.v2_4];
         }
     }
     TypeScriptVersion.tagsToUpdate = tagsToUpdate;
@@ -38,6 +40,7 @@ var TypeScriptVersion;
         tags.v2_1 = "ts2.1";
         tags.v2_2 = "ts2.2";
         tags.v2_3 = "ts2.3";
+        tags.v2_4 = "ts2.4";
     })(tags || (tags = {}));
 })(TypeScriptVersion = exports.TypeScriptVersion || (exports.TypeScriptVersion = {}));
 function parseHeaderOrFail(mainFileContent) {
