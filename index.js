@@ -13,8 +13,8 @@ var TypeScriptVersion;
         }
     }
     /** True if a package with the given typescript version should be published as prerelease. */
-    function isPrerelease(version) {
-        return version === TypeScriptVersion.Latest;
+    function isPrerelease(_version) {
+        return false;
     }
     TypeScriptVersion.isPrerelease = isPrerelease;
     /** List of NPM tags that should be changed to point to the latest version. */
@@ -80,7 +80,7 @@ function headerParser(strict) {
         libraryName: label.name,
         libraryMajorVersion: label.major,
         libraryMinorVersion: label.minor,
-        projects, contributors, typeScriptVersion
+        projects, contributors, typeScriptVersion,
     }));
 }
 /*
@@ -107,7 +107,6 @@ function contributorsParser(strict) {
     }
     return contributors;
 }
-;
 // TODO: Should we do something with the URL?
 const definitionsParser = pm.regexp(/\r?\n\/\/ Definitions: [^\r\n]+/);
 function parseLabel(strict) {
