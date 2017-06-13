@@ -17,31 +17,18 @@ var TypeScriptVersion;
         return false;
     }
     TypeScriptVersion.isPrerelease = isPrerelease;
+    const allTags = ["ts2.0", "ts2.1", "ts2.2", "ts2.3", "ts2.4", "ts2.5", "latest"];
     /** List of NPM tags that should be changed to point to the latest version. */
     function tagsToUpdate(typeScriptVersion) {
-        switch (typeScriptVersion) {
-            case "2.0":
-                // A 2.0-compatible package is assumed compatible with TypeScript 2.1
-                // We want the "2.1" tag to always exist.
-                return [tags.latest, tags.v2_0, tags.v2_1, tags.v2_2, tags.v2_3, tags.v2_4];
-            case "2.1":
-                return [tags.latest, tags.v2_1, tags.v2_2, tags.v2_3, tags.v2_4];
-            case "2.2":
-                return [tags.latest, tags.v2_2, tags.v2_3, tags.v2_4];
-            case "2.3":
-                return [tags.latest, tags.v2_3, tags.v2_4];
+        // A 2.0-compatible package is assumed compatible with TypeScript 2.1
+        // We want the "2.1" tag to always exist.
+        const idx = allTags.indexOf(`ts${typeScriptVersion}`);
+        if (idx === -1) {
+            throw new Error();
         }
+        return allTags.slice(idx);
     }
     TypeScriptVersion.tagsToUpdate = tagsToUpdate;
-    var tags;
-    (function (tags) {
-        tags.latest = "latest";
-        tags.v2_0 = "ts2.0";
-        tags.v2_1 = "ts2.1";
-        tags.v2_2 = "ts2.2";
-        tags.v2_3 = "ts2.3";
-        tags.v2_4 = "ts2.4";
-    })(tags || (tags = {}));
 })(TypeScriptVersion = exports.TypeScriptVersion || (exports.TypeScriptVersion = {}));
 function parseHeaderOrFail(mainFileContent) {
     const header = parseHeader(mainFileContent, /*strict*/ false);
