@@ -17,7 +17,7 @@ var TypeScriptVersion;
         return false;
     }
     TypeScriptVersion.isPrerelease = isPrerelease;
-    const allTags = ["ts2.0", "ts2.1", "ts2.2", "ts2.3", "ts2.4", "ts2.5", "latest"];
+    const allTags = ["ts2.0", "ts2.1", "ts2.2", "ts2.3", "ts2.4", "ts2.5", "ts2.6", "latest"];
     /** List of NPM tags that should be changed to point to the latest version. */
     function tagsToUpdate(typeScriptVersion) {
         // A 2.0-compatible package is assumed compatible with TypeScript 2.1
@@ -51,7 +51,8 @@ function renderParseError({ line, column, expected }) {
     return `At ${line}:${column} : Expected ${renderExpected(expected)}`;
 }
 function isParseError(x) {
-    return !!x.expected;
+    // tslint:disable-next-line strict-type-predicates
+    return x.expected !== undefined;
 }
 /** @param strict If true, we allow fewer things to be parsed. Turned on by linting. */
 function parseHeader(text, strict) {
@@ -111,14 +112,14 @@ function parseLabel(strict) {
         // Last digit is allowed to be "x", which acts like "0"
         const rgx = /((\d+|x)\.(\d+)(\.\d+)?(v)? )?(.+)/;
         const match = rgx.exec(reversed);
-        if (!match) {
+        if (match === null) {
             return fail();
         }
         const [, version, a, b, c, v, nameReverse] = match;
         let majorReverse;
         let minorReverse;
-        if (version) {
-            if (c) {
+        if (version !== undefined) {
+            if (c !== undefined) {
                 // There is a patch version
                 majorReverse = c;
                 minorReverse = b;
@@ -130,7 +131,7 @@ function parseLabel(strict) {
                 majorReverse = b;
                 minorReverse = a;
             }
-            if (v && strict) {
+            if (v !== undefined && strict) {
                 return fail("'v' not allowed");
             }
         }
@@ -145,7 +146,7 @@ function parseLabel(strict) {
         return pm.makeSuccess(end, { name, major: intOfString(major), minor: minor === "x" ? 0 : intOfString(minor) });
         function fail(msg) {
             let expected = "foo MAJOR.MINOR";
-            if (msg) {
+            if (msg !== undefined) {
                 expected += ` (${msg})`;
             }
             return pm.makeFailure(index, expected);
