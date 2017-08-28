@@ -2,36 +2,38 @@
 import pm = require("parsimmon");
 export declare type TypeScriptVersion = "2.0" | "2.1" | "2.2" | "2.3" | "2.4";
 export declare namespace TypeScriptVersion {
-    const All: TypeScriptVersion[];
-    const Lowest = "2.0";
+    const all: ReadonlyArray<TypeScriptVersion>;
+    const lowest = "2.0";
     /** Latest version that may be specified in a `// TypeScript Version:` header. */
-    const Latest = "2.4";
+    const latest = "2.4";
     /** True if a package with the given typescript version should be published as prerelease. */
     function isPrerelease(_version: TypeScriptVersion): boolean;
+    function range(min: TypeScriptVersion): ReadonlyArray<TypeScriptVersion>;
     /** List of NPM tags that should be changed to point to the latest version. */
-    function tagsToUpdate(typeScriptVersion: TypeScriptVersion): string[];
+    function tagsToUpdate(typeScriptVersion: TypeScriptVersion): ReadonlyArray<string>;
 }
 export interface Header {
-    libraryName: string;
-    libraryMajorVersion: number;
-    libraryMinorVersion: number;
-    typeScriptVersion: TypeScriptVersion;
-    projects: string[];
-    contributors: Author[];
+    readonly libraryName: string;
+    readonly libraryMajorVersion: number;
+    readonly libraryMinorVersion: number;
+    readonly typeScriptVersion: TypeScriptVersion;
+    readonly projects: ReadonlyArray<string>;
+    readonly contributors: ReadonlyArray<Author>;
 }
 export interface Author {
     name: string;
     url: string;
+    githubUsername: string | undefined;
 }
 export interface ParseError {
-    index: number;
-    line: number;
-    column: number;
-    expected: string[];
+    readonly index: number;
+    readonly line: number;
+    readonly column: number;
+    readonly expected: ReadonlyArray<string>;
 }
 export declare function parseHeaderOrFail(mainFileContent: string): Header;
 export declare function validate(mainFileContent: string): ParseError | undefined;
-export declare function renderExpected(expected: string[]): string;
+export declare function renderExpected(expected: ReadonlyArray<string>): string;
 export declare function parseTypeScriptVersionLine(line: string): TypeScriptVersion;
 declare module "parsimmon" {
     type Pr<T> = pm.Parser<T>;

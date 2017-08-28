@@ -3,12 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const pm = require("parsimmon");
 var TypeScriptVersion;
 (function (TypeScriptVersion) {
-    TypeScriptVersion.All = ["2.0", "2.1", "2.2", "2.3", "2.4"];
-    TypeScriptVersion.Lowest = "2.0";
+    TypeScriptVersion.all = ["2.0", "2.1", "2.2", "2.3", "2.4"];
+    TypeScriptVersion.lowest = "2.0";
     /** Latest version that may be specified in a `// TypeScript Version:` header. */
-    TypeScriptVersion.Latest = "2.4";
-    for (const v of TypeScriptVersion.All) {
-        if (v > TypeScriptVersion.Latest) {
+    TypeScriptVersion.latest = "2.4";
+    for (const v of TypeScriptVersion.all) {
+        if (v > TypeScriptVersion.latest) {
             throw new Error("'Latest' not properly set.");
         }
     }
@@ -17,7 +17,11 @@ var TypeScriptVersion;
         return false;
     }
     TypeScriptVersion.isPrerelease = isPrerelease;
-    const allTags = ["ts2.0", "ts2.1", "ts2.2", "ts2.3", "ts2.4", "ts2.5", "ts2.6", "latest"];
+    function range(min) {
+        return TypeScriptVersion.all.filter(v => v >= min);
+    }
+    TypeScriptVersion.range = range;
+    const allTags = ["ts2.0", "ts2.1", "ts2.2", "ts2.3", "ts2.4", "ts2.5", "latest"];
     /** List of NPM tags that should be changed to point to the latest version. */
     function tagsToUpdate(typeScriptVersion) {
         // A 2.0-compatible package is assumed compatible with TypeScript 2.1
@@ -87,13 +91,15 @@ Use `\s\s+` to ensure at least 2 spaces, to  disambiguate from the next line bei
 const separator = pm.regexp(/(, )|(,?\r?\n\/\/\s\s+)/);
 const projectParser = pm.sepBy1(pm.regexp(/[^,\r\n]+/), separator);
 function contributorsParser(strict) {
-    const contributor = pm.seqMap(pm.regexp(/([^<]+) /, 1), pm.regexp(/<([^>]+)>/, 1), (name, url) => ({ name, url }));
-    const contributors = pm.sepBy1(contributor, separator);
-    if (!strict) {
-        // Allow trailing whitespace.
-        return pm.seqMap(contributors, pm.regexp(/ */), a => a);
-    }
-    return contributors;
+    const contributor = strict
+        ? pm.seqMap(pm.regexp(/([^<]+) /, 1), pm.regexp(/\<https\:\/\/github\.com\/([a-zA-Z\d\-]+)\>/, 1), (name, githubUsername) => ({ name, url: `https://github.com/${githubUsername}`, githubUsername }))
+        : pm.seqMap(pm.regexp(/([^<]+) /, 1), pm.regexp(/<([^>]+)> */, 1), (name, url) => {
+            const rgx = /^https\:\/\/github.com\/([a-zA-Z\d\-]+)$/;
+            const match = rgx.exec(url);
+            // tslint:disable-next-line no-null-keyword
+            return ({ name, url, githubUsername: match === null ? undefined : match[1] });
+        });
+    return pm.sepBy1(contributor, separator);
 }
 // TODO: Should we do something with the URL?
 const definitionsParser = pm.regexp(/\r?\n\/\/ Definitions: [^\r\n]+/);
