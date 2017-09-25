@@ -21,7 +21,7 @@ var TypeScriptVersion;
         return TypeScriptVersion.all.filter(v => v >= min);
     }
     TypeScriptVersion.range = range;
-    const allTags = ["ts2.0", "ts2.1", "ts2.2", "ts2.3", "ts2.4", "ts2.5", "latest"];
+    const allTags = ["ts2.0", "ts2.1", "ts2.2", "ts2.3", "ts2.4", "ts2.5", "ts2.6", "latest"];
     /** List of NPM tags that should be changed to point to the latest version. */
     function tagsToUpdate(typeScriptVersion) {
         // A 2.0-compatible package is assumed compatible with TypeScript 2.1
@@ -93,6 +93,7 @@ const projectParser = pm.sepBy1(pm.regexp(/[^,\r\n]+/), separator);
 function contributorsParser(strict) {
     const contributor = strict
         ? pm.seqMap(pm.regexp(/([^<]+) /, 1), pm.regexp(/\<https\:\/\/github\.com\/([a-zA-Z\d\-]+)\>/, 1), (name, githubUsername) => ({ name, url: `https://github.com/${githubUsername}`, githubUsername }))
+        // In non-strict mode, allows arbitrary URL, and trailing whitespace.
         : pm.seqMap(pm.regexp(/([^<]+) /, 1), pm.regexp(/<([^>]+)> */, 1), (name, url) => {
             const rgx = /^https\:\/\/github.com\/([a-zA-Z\d\-]+)$/;
             const match = rgx.exec(url);
