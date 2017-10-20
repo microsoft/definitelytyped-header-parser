@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const pm = require("parsimmon");
 var TypeScriptVersion;
 (function (TypeScriptVersion) {
-    TypeScriptVersion.all = ["2.0", "2.1", "2.2", "2.3", "2.4"];
+    TypeScriptVersion.all = ["2.0", "2.1", "2.2", "2.3", "2.4", "2.5"];
     TypeScriptVersion.lowest = "2.0";
     /** Latest version that may be specified in a `// TypeScript Version:` header. */
     TypeScriptVersion.latest = "2.4";
@@ -21,7 +21,17 @@ var TypeScriptVersion;
         return TypeScriptVersion.all.filter(v => v >= min);
     }
     TypeScriptVersion.range = range;
-    const allTags = ["ts2.0", "ts2.1", "ts2.2", "ts2.3", "ts2.4", "ts2.5", "ts2.6", "latest"];
+    const allTags = [
+        "ts2.0",
+        "ts2.1",
+        "ts2.2",
+        "ts2.3",
+        "ts2.4",
+        "ts2.5",
+        "ts2.6",
+        "ts2.7",
+        "latest",
+    ];
     /** List of NPM tags that should be changed to point to the latest version. */
     function tagsToUpdate(typeScriptVersion) {
         // A 2.0-compatible package is assumed compatible with TypeScript 2.1
