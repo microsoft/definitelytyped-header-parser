@@ -3,9 +3,9 @@ import pm = require("parsimmon");
 export declare type TypeScriptVersion = "2.0" | "2.1" | "2.2" | "2.3" | "2.4" | "2.5";
 export declare namespace TypeScriptVersion {
     const all: ReadonlyArray<TypeScriptVersion>;
-    const lowest = "2.0";
+    const lowest: TypeScriptVersion;
     /** Latest version that may be specified in a `// TypeScript Version:` header. */
-    const latest = "2.4";
+    const latest: TypeScriptVersion;
     /** True if a package with the given typescript version should be published as prerelease. */
     function isPrerelease(_version: TypeScriptVersion): boolean;
     function range(min: TypeScriptVersion): ReadonlyArray<TypeScriptVersion>;

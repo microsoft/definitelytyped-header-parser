@@ -4,14 +4,9 @@ const pm = require("parsimmon");
 var TypeScriptVersion;
 (function (TypeScriptVersion) {
     TypeScriptVersion.all = ["2.0", "2.1", "2.2", "2.3", "2.4", "2.5"];
-    TypeScriptVersion.lowest = "2.0";
+    TypeScriptVersion.lowest = TypeScriptVersion.all[0];
     /** Latest version that may be specified in a `// TypeScript Version:` header. */
-    TypeScriptVersion.latest = "2.4";
-    for (const v of TypeScriptVersion.all) {
-        if (v > TypeScriptVersion.latest) {
-            throw new Error("'Latest' not properly set.");
-        }
-    }
+    TypeScriptVersion.latest = TypeScriptVersion.all[TypeScriptVersion.all.length - 1];
     /** True if a package with the given typescript version should be published as prerelease. */
     function isPrerelease(_version) {
         return false;
