@@ -73,11 +73,16 @@ describe("parseTypeScriptVersionLine", () => {
 		const src = "// TypeScript Version: 2.3";
 		assert.equal(parseTypeScriptVersionLine(src), "2.3");
 	});
+
+	it("allows typescript 2.6", () => {
+		const src = "// TypeScript Version: 2.6";
+		assert.equal(parseTypeScriptVersionLine(src), "2.6");
+	});
 });
 
 describe("tagsToUpdate", () => {
 	it("works", () => {
-		assert.deepEqual(TypeScriptVersion.tagsToUpdate("2.2"), ["ts2.2", "ts2.3", "ts2.4", "ts2.5", "latest"]);
+		assert.deepEqual(TypeScriptVersion.tagsToUpdate("2.2"), ["ts2.2", "ts2.3", "ts2.4", "ts2.5", "ts2.6", "ts2.7", "latest"]);
 	});
 });
 
