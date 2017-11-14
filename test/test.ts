@@ -74,9 +74,9 @@ describe("parseTypeScriptVersionLine", () => {
 		assert.equal(parseTypeScriptVersionLine(src), "2.3");
 	});
 
-	it("allows typescript 2.6", () => {
-		const src = "// TypeScript Version: 2.6";
-		assert.equal(parseTypeScriptVersionLine(src), "2.6");
+	it("allows typescript 2.7", () => {
+		const src = "// TypeScript Version: 2.7";
+		assert.equal(parseTypeScriptVersionLine(src), "2.7");
 	});
 });
 
