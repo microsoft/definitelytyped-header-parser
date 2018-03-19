@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const pm = require("parsimmon");
 var TypeScriptVersion;
 (function (TypeScriptVersion) {
-    TypeScriptVersion.all = ["2.0", "2.1", "2.2", "2.3", "2.4", "2.5", "2.6"];
+    TypeScriptVersion.all = ["2.0", "2.1", "2.2", "2.3", "2.4", "2.5", "2.6", "2.7"];
     TypeScriptVersion.lowest = TypeScriptVersion.all[0];
     /** Latest version that may be specified in a `// TypeScript Version:` header. */
     TypeScriptVersion.latest = TypeScriptVersion.all[TypeScriptVersion.all.length - 1];
@@ -26,6 +26,7 @@ var TypeScriptVersion;
         "ts2.6",
         "ts2.7",
         "ts2.8",
+        "ts2.9",
         "latest",
     ];
     /** List of NPM tags that should be changed to point to the latest version. */
@@ -125,14 +126,14 @@ function parseLabel(strict) {
         // Last digit is allowed to be "x", which acts like "0"
         const rgx = /((\d+|x)\.(\d+)(\.\d+)?(v)? )?(.+)/;
         const match = rgx.exec(reversed);
-        if (match === null) {
+        if (match === null) { // tslint:disable-line no-null-keyword
             return fail();
         }
         const [, version, a, b, c, v, nameReverse] = match;
         let majorReverse;
         let minorReverse;
-        if (version !== undefined) {
-            if (c !== undefined) {
+        if (version !== undefined) { // tslint:disable-line strict-type-predicates
+            if (c !== undefined) { // tslint:disable-line strict-type-predicates
                 // There is a patch version
                 majorReverse = c;
                 minorReverse = b;
@@ -144,7 +145,7 @@ function parseLabel(strict) {
                 majorReverse = b;
                 minorReverse = a;
             }
-            if (v !== undefined && strict) {
+            if (v !== undefined && strict) { // tslint:disable-line strict-type-predicates
                 return fail("'v' not allowed");
             }
         }
