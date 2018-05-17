@@ -27,6 +27,7 @@ var TypeScriptVersion;
         "ts2.7",
         "ts2.8",
         "ts2.9",
+        "ts3.0",
         "latest",
     ];
     /** List of NPM tags that should be changed to point to the latest version. */
