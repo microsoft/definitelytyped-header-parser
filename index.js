@@ -1,13 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const assert = require("assert");
 const pm = require("parsimmon");
 var TypeScriptVersion;
 (function (TypeScriptVersion) {
-    TypeScriptVersion.all = ["2.0", "2.1", "2.2", "2.3", "2.4", "2.5", "2.6", "2.7", "2.8", "2.9", "3.0"];
+    TypeScriptVersion.all = ["2.0", "2.1", "2.2", "2.3", "2.4", "2.5", "2.6", "2.7", "2.8", "2.9", "3.0", "3.1"];
     TypeScriptVersion.lowest = TypeScriptVersion.all[0];
     /** Latest version that may be specified in a `// TypeScript Version:` header. */
     TypeScriptVersion.latest = TypeScriptVersion.all[TypeScriptVersion.all.length - 1];
-    /** True if a package with the given typescript version should be published as prerelease. */
+    /** @deprecated */
     function isPrerelease(_version) {
         return false;
     }
@@ -43,7 +44,32 @@ var TypeScriptVersion;
         return allTags.slice(idx);
     }
     TypeScriptVersion.tagsToUpdate = tagsToUpdate;
+    function previous(v) {
+        const index = TypeScriptVersion.all.indexOf(v);
+        assert(index !== -1);
+        return index === 0 ? undefined : TypeScriptVersion.all[index - 1];
+    }
+    TypeScriptVersion.previous = previous;
+    function isRedirectable(v) {
+        return TypeScriptVersion.all.indexOf(v) >= TypeScriptVersion.all.indexOf("3.1");
+    }
+    TypeScriptVersion.isRedirectable = isRedirectable;
 })(TypeScriptVersion = exports.TypeScriptVersion || (exports.TypeScriptVersion = {}));
+function isTypeScriptVersion(str) {
+    return TypeScriptVersion.all.includes(str);
+}
+exports.isTypeScriptVersion = isTypeScriptVersion;
+function makeTypesVersionsForPackageJson(typesVersions) {
+    if (typesVersions.length === 0) {
+        return undefined;
+    }
+    const out = {};
+    for (const version of typesVersions) {
+        out[`>=${version}.0-0`] = { "*": [`ts${version}/*`] };
+    }
+    return out;
+}
+exports.makeTypesVersionsForPackageJson = makeTypesVersionsForPackageJson;
 function parseHeaderOrFail(mainFileContent) {
     const header = parseHeader(mainFileContent, /*strict*/ false);
     if (isParseError(header)) {

@@ -1,17 +1,18 @@
-/// <reference types="parsimmon" />
 import pm = require("parsimmon");
 /** Parse-able TypeScript versions. Only add to this list if we will support this version on DefinitelyTyped. */
-export declare type TypeScriptVersion = "2.0" | "2.1" | "2.2" | "2.3" | "2.4" | "2.5" | "2.6" | "2.7" | "2.8" | "2.9" | "3.0";
+export declare type TypeScriptVersion = "2.0" | "2.1" | "2.2" | "2.3" | "2.4" | "2.5" | "2.6" | "2.7" | "2.8" | "2.9" | "3.0" | "3.1";
 export declare namespace TypeScriptVersion {
     const all: ReadonlyArray<TypeScriptVersion>;
     const lowest: TypeScriptVersion;
     /** Latest version that may be specified in a `// TypeScript Version:` header. */
     const latest: TypeScriptVersion;
-    /** True if a package with the given typescript version should be published as prerelease. */
+    /** @deprecated */
     function isPrerelease(_version: TypeScriptVersion): boolean;
     function range(min: TypeScriptVersion): ReadonlyArray<TypeScriptVersion>;
     /** List of NPM tags that should be changed to point to the latest version. */
     function tagsToUpdate(typeScriptVersion: TypeScriptVersion): ReadonlyArray<string>;
+    function previous(v: TypeScriptVersion): TypeScriptVersion | undefined;
+    function isRedirectable(v: TypeScriptVersion): boolean;
 }
 export interface Header {
     readonly libraryName: string;
@@ -22,9 +23,9 @@ export interface Header {
     readonly contributors: ReadonlyArray<Author>;
 }
 export interface Author {
-    name: string;
-    url: string;
-    githubUsername: string | undefined;
+    readonly name: string;
+    readonly url: string;
+    readonly githubUsername: string | undefined;
 }
 export interface ParseError {
     readonly index: number;
@@ -32,6 +33,8 @@ export interface ParseError {
     readonly column: number;
     readonly expected: ReadonlyArray<string>;
 }
+export declare function isTypeScriptVersion(str: string): str is TypeScriptVersion;
+export declare function makeTypesVersionsForPackageJson(typesVersions: ReadonlyArray<TypeScriptVersion>): unknown;
 export declare function parseHeaderOrFail(mainFileContent: string): Header;
 export declare function validate(mainFileContent: string): ParseError | undefined;
 export declare function renderExpected(expected: ReadonlyArray<string>): string;
