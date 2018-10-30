@@ -73,17 +73,23 @@ describe("parseTypeScriptVersionLine", () => {
 		const src = "// TypeScript Version: 2.3";
 		assert.equal(parseTypeScriptVersionLine(src), "2.3");
 	});
+
+	it("allows post 3 version tags", () => {
+		const src = "// TypeScript Version: 3.0";
+		assert.equal(parseTypeScriptVersionLine(src), "3.0");
+	});
+
+	it("does not allow unallowed version tags", () => {
+		const src = "// TypeScript Version: 3.7";
+		assert.throws(() => parseTypeScriptVersionLine(src), `Could not parse version: line is ${src}`);
+	});
 });
 
 describe("tagsToUpdate", () => {
 	it("works", () => {
-<<<<<<< HEAD
-		assert.deepEqual(TypeScriptVersion.tagsToUpdate("2.5"), ["ts2.5", "ts2.6", "ts2.7", "ts2.8", "ts2.9", "ts3.0", "ts3.1", "ts3.2", "latest"]);
-=======
 		assert.deepEqual(
 			TypeScriptVersion.tagsToUpdate("2.5"),
 			["ts2.5", "ts2.6", "ts2.7", "ts2.8", "ts2.9", "ts3.0", "ts3.1", "ts3.2", "latest"]);
->>>>>>> master
 	});
 });
 

@@ -196,7 +196,7 @@ function parseLabel(strict) {
         }
     });
 }
-const typeScriptVersionLineParser = pm.regexp(/\/\/ TypeScript Version: (2.(\d))/, 1).chain(v => TypeScriptVersion.all.includes(v)
+const typeScriptVersionLineParser = pm.regexp(/\/\/ TypeScript Version: (\d.(\d))/, 1).chain(v => TypeScriptVersion.all.includes(v)
     ? pm.succeed(v)
     : pm.fail(`TypeScript ${v} is not yet supported.`));
 const typeScriptVersionParser = pm.regexp(/\r?\n/)
