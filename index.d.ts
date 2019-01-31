@@ -1,6 +1,6 @@
 import pm = require("parsimmon");
 /** Parse-able TypeScript versions. Only add to this list if we will support this version on DefinitelyTyped. */
-export declare type TypeScriptVersion = "2.0" | "2.1" | "2.2" | "2.3" | "2.4" | "2.5" | "2.6" | "2.7" | "2.8" | "2.9" | "3.0" | "3.1" | "3.2" | "3.3";
+export declare type TypeScriptVersion = "2.0" | "2.1" | "2.2" | "2.3" | "2.4" | "2.5" | "2.6" | "2.7" | "2.8" | "2.9" | "3.0" | "3.1" | "3.2" | "3.3" | "3.4";
 export declare namespace TypeScriptVersion {
     const all: ReadonlyArray<TypeScriptVersion>;
     const lowest: TypeScriptVersion;

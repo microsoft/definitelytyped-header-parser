@@ -4,7 +4,7 @@ const assert = require("assert");
 const pm = require("parsimmon");
 var TypeScriptVersion;
 (function (TypeScriptVersion) {
-    TypeScriptVersion.all = ["2.0", "2.1", "2.2", "2.3", "2.4", "2.5", "2.6", "2.7", "2.8", "2.9", "3.0", "3.1", "3.2", "3.3"];
+    TypeScriptVersion.all = ["2.0", "2.1", "2.2", "2.3", "2.4", "2.5", "2.6", "2.7", "2.8", "2.9", "3.0", "3.1", "3.2", "3.3", "3.4"];
     TypeScriptVersion.lowest = TypeScriptVersion.all[0];
     /** Latest version that may be specified in a `// TypeScript Version:` header. */
     TypeScriptVersion.latest = TypeScriptVersion.all[TypeScriptVersion.all.length - 1];
@@ -32,6 +32,7 @@ var TypeScriptVersion;
         "ts3.1",
         "ts3.2",
         "ts3.3",
+        "ts3.4",
         "latest",
     ];
     /** List of NPM tags that should be changed to point to the latest version. */
