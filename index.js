@@ -104,12 +104,13 @@ function parseHeader(text, strict) {
         : { index: res.index.offset, line: res.index.line, column: res.index.column, expected: res.expected };
 }
 function headerParser(strict) {
-    return pm.seqMap(pm.string("// Type definitions for "), parseLabel(strict), pm.string("// Project: "), projectParser, pm.regexp(/\r?\n\/\/ Definitions by: /), contributorsParser(strict), definitionsParser, typeScriptVersionParser, pm.all, // Don't care about the rest of the file
+    return pm.seqMap(pm.regex(/\/\/ Type definitions for (non-npm package )?/), parseLabel(strict), pm.string("// Project: "), projectParser, pm.regexp(/\r?\n\/\/ Definitions by: /), contributorsParser(strict), definitionsParser, typeScriptVersionParser, pm.all, // Don't care about the rest of the file
     // tslint:disable-next-line:variable-name
-    (_str, label, _project, projects, _defsBy, contributors, _definitions, typeScriptVersion) => ({
+    (str, label, _project, projects, _defsBy, contributors, _definitions, typeScriptVersion) => ({
         libraryName: label.name,
         libraryMajorVersion: label.major,
         libraryMinorVersion: label.minor,
+        nonNpm: str.endsWith("non-npm package "),
         projects, contributors, typeScriptVersion,
     }));
 }

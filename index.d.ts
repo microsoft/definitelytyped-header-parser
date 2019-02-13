@@ -15,6 +15,7 @@ export declare namespace TypeScriptVersion {
     function isRedirectable(v: TypeScriptVersion): boolean;
 }
 export interface Header {
+    readonly nonNpm: boolean;
     readonly libraryName: string;
     readonly libraryMajorVersion: number;
     readonly libraryMinorVersion: number;
