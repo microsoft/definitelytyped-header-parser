@@ -59,16 +59,15 @@ export namespace TypeScriptVersion {
 
     /** List of NPM tags that should be changed to point to the latest version. */
     export function tagsToUpdate(v: TypeScriptVersion): ReadonlyArray<string>  {
-        assert(all.indexOf(v) !== -1);
         const idx = supportedTags.indexOf(`ts${v}`);
-        // unsupported versions should update all supported tags
-        return idx === -1 ? supportedTags : supportedTags.slice(idx);
+        assert(idx !== -1);
+        return supportedTags.slice(idx);
     }
 
     export function previous(v: TypeScriptVersion): TypeScriptVersion | undefined {
-        assert(all.indexOf(v) !== -1);
         const index = supported.indexOf(v);
-        return index < 1 ? undefined : supported[index - 1];
+        assert(index !== -1);
+        return index === 0 ? undefined : supported[index - 1];
     }
 
     export function isRedirectable(v: TypeScriptVersion): boolean {
