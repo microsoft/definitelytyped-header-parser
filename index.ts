@@ -1,13 +1,38 @@
 import assert = require("assert");
 import pm = require("parsimmon");
 
-/*
-Example:
+/**
+
+# Example header format #
+
 // Type definitions for foo 1.2
 // Project: https://github.com/foo/foo, https://foo.com
 // Definitions by: My Self <https://github.com/me>, Some Other Guy <https://github.com/otherguy>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.1
+
+# How to add new version of Typescript #
+
+For the RC:
+
+1. Add a new version to the end of `supportedTags`.
+2. Update failing tests.
+3. Publish and update dependents.
+
+For the release:
+
+1. Add new versions to the end of `TypeScriptVersion` and `supported`.
+2. Update failing tests.
+3. Publish and update dependents.
+
+# How to deprecate versions on Definitely Typed #
+
+1. Move versions from `TypeScriptVersion` to `UnsupportedTypeScriptVersion`.
+2. Move versions from `supported` to `unsupported`.
+3. Remove entry from `supportedTags`.
+4. Update failing tests.
+5. Publish and update dependents.
+
 */
 
 /** Parseable but unsupported TypeScript versions. */
@@ -28,6 +53,7 @@ export namespace TypeScriptVersion {
     export const unsupported: readonly UnsupportedTypeScriptVersion[] =
         ["2.0", "2.1", "2.2", "2.3", "2.4", "2.5", "2.6", "2.7"];
     export const all: readonly AllTypeScriptVersion[] = [...unsupported, ...supported];
+
     export const lowest = supported[0];
     /** Latest version that may be specified in a `// TypeScript Version:` header. */
     export const latest = supported[supported.length - 1];
