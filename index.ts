@@ -53,7 +53,6 @@ export namespace TypeScriptVersion {
     export const unsupported: readonly UnsupportedTypeScriptVersion[] =
         ["2.0", "2.1", "2.2", "2.3", "2.4", "2.5", "2.6", "2.7"];
     export const all: readonly AllTypeScriptVersion[] = [...unsupported, ...supported];
-
     export const lowest = supported[0];
     /** Latest version that may be specified in a `// TypeScript Version:` header. */
     export const latest = supported[supported.length - 1];
